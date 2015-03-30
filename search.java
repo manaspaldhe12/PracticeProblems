@@ -130,6 +130,7 @@ public class search {
 	/*Determine whether or not there exist two elements in Set S
 	 whose sum is exactly x */
 	public static int sumExists (int[] set, int desiredSum) {
+		 /* function should ideally return true false; but to test using int */
 		int[] sortedSet = mergeSort(set);
 		for (int i = 0; i < set.length; i++) {
 			int current = sortedSet[i];
@@ -142,6 +143,7 @@ public class search {
 	}
 
 	public static int fasterSumExists (int[] set, int desiredSum) {
+		 /* function should ideally return true false; but to test using int */
 		 Hashtable numbers = new Hashtable();
 		 for (int i = 0; i < set.length; i++) {
 		 	numbers.put(set[i], true);
@@ -149,7 +151,7 @@ public class search {
 		 		return set[i];
 		 	}
 		 }
-		 return -9999; //not found
+		 return -9999; //not found;
 	}
 
 	public static void printArray (int[] inputArray) {
@@ -160,14 +162,44 @@ public class search {
 		System.out.println("");
 	}
 
+	public static boolean letterFromMagazine (String[] magazine, String[] letter) {
+		Hashtable<String, Integer> wordCount = new  Hashtable<String, Integer>();
+		for (int i = 0; i < magazine.length; i++) {
+			int currentValue = 1;
+			try {
+				currentValue = wordCount.get(magazine[i]);
+			} catch (Exception e) {
+				currentValue = 1;
+			}
+			wordCount.put(magazine[i], currentValue++);
+		}	
+
+		for (int j = 0; j < letter.length; j++) {
+			int currentValue = 0;
+			try {
+				currentValue = wordCount.get(letter[j]);
+			} catch (Exception e) {
+				currentValue = 0;
+			}
+			if (currentValue == 0) {
+				return false;
+			}
+			currentValue--;
+			wordCount.put(letter[j], currentValue);
+		}
+		return true;
+	}
+
 	public static void main(String[] args) {
 		//int[] array = new int[] {1,2,3,4,5,5,7,7,8,9,10};
 		//int[] array = new int[] {1,2,3,4,5,6,7,8};
 		//int[] array = new int[] {-5, -2, 0, 1, 5, 9, 10};
 		//int[] array = new int[] {-5, -4, -1, 0, 4, 6, 9};
-		int[] array = new int[] {0,6,4,2, 39,34, -1, -43, 2323};
+		//int[] array = new int[] {0,6,4,2, 39,34, -1, -43, 2323};
 		int key = 8;
-		System.out.println(fasterSumExists(array, 73));
+		String[] letter = {"I", "am", "a", "human", "who", "human", "smart"};
+		String[] magazine = {"who", "am", "I", "am", "I", "a", "human", "smart", "is"};
+		System.out.println(letterFromMagazine(magazine, letter));
 		//printArray(mergeSort(array));
 	}
 }
