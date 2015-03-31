@@ -168,6 +168,31 @@ public class graph {
 
 	}
 
+	public static void depthFirstSearch (graph g, int startNode) {
+		Stack s = new Stack();
+		s.insert(startNode);
+		while (!s.isEmpty()) {
+			int top = s.top();
+			if (g.colors[top] == 1) {//visited; now it should finish
+				int pop = s.pop();
+				System.out.println("		Popping: " + top);
+				g.colors[top] = 2; //finished
+			} else{
+				LinkedList edgesForNode = g.edges[top];
+				System.out.println("At Node: " + top);
+				while (edgesForNode != null) {
+					//System.out.println("Checking Node: " + edgesForNode.data);
+					if (g.colors[edgesForNode.data] == 0){
+						s.insert(edgesForNode.data);
+						System.out.println("	Pushing: " + edgesForNode.data);
+					}
+					edgesForNode = edgesForNode.next;
+				}
+				g.colors[top] = 1;
+			}
+		}
+	}
+
 	public static void print (graph g) {
 		for (int i = 0; i < g.numberOfNodes; i++) {
 			System.out.println("node: " + i);
@@ -177,27 +202,27 @@ public class graph {
 
 	public static void main(String[] args) {
 		graph testGraph = new graph (5);
-		testGraph.edges[0] = testGraph.edges[0].insertAtHead(1);
+		testGraph.edges[0] = new LinkedList(1);
 		testGraph.edges[0] = testGraph.edges[0].insertAtHead(2);
 		testGraph.edges[0] = testGraph.edges[0].insertAtHead(4);
 
-		testGraph.edges[1] = testGraph.edges[1].insertAtHead(2);
+		testGraph.edges[1] = new LinkedList(2);
 		testGraph.edges[1] = testGraph.edges[1].insertAtHead(4);
 		testGraph.edges[1] = testGraph.edges[1].insertAtHead(0);
 
-		testGraph.edges[2] = testGraph.edges[2].insertAtHead(2);
+		testGraph.edges[2] = new LinkedList(3);
 		testGraph.edges[2] = testGraph.edges[2].insertAtHead(0);
 
-		testGraph.edges[3] = testGraph.edges[3].insertAtHead(4);
+		testGraph.edges[3] = new LinkedList(4);
 		testGraph.edges[3] = testGraph.edges[3].insertAtHead(0);
 
-		testGraph.edges[4] = testGraph.edges[4].insertAtHead(3);
+		testGraph.edges[4] = new LinkedList(3);
 		testGraph.edges[4] = testGraph.edges[4].insertAtHead(2);
 		testGraph.edges[4] = testGraph.edges[4].insertAtHead(1);
 		testGraph.edges[4] = testGraph.edges[4].insertAtHead(0);
 
 		print(testGraph);
-		breadFirstSearch(testGraph, 0);
+		depthFirstSearch(testGraph, 2);
 
 		// Queue q = new Queue(0);
 		// q.enqueue(1);
